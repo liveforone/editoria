@@ -24,7 +24,7 @@
                     <span>
                         <span style="font-size: small" th:text="${post.user}"></span>
                         <span style="font-size: xx-small" th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
-                        <form th:action="@{'/user/comment/delete/' + ${post.id}}" method="post" th:if="${post.id == member}">
+                        <form th:action="@{'/user/comment/delete/' + ${post.id}}" method="post" th:if="${post.user == member}">
                             <button type="submit" class="badge bi bi-pencil-square">삭제</button>
                             <input type="hidden" name="boardId" th:value="${board.id}">
                         </form>
