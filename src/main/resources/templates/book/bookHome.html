@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>작품</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand" th:href="@{/}">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" sec:authorize="isAuthenticated()" th:if="${not#authorization.expression('hasRole(''WRITER'')')}">
+                <a class="nav-link" th:href="@{/user/writer}">작가등록</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/book/category/여행}">여행</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/book/category/시사}">시사</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/book/category/IT}">IT</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/book/category/음악}">음악</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/book/category/직장생활}">직장생활</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/book/category/스타트업}">스타트업</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/book/category/운동}">운동</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/book/category/디자인}">디자인</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/book/category/마케팅}">마케팅</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/book/category/동물}">동물</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" th:action="@{/user/book/search}" method="GET">
+            <input name="keyword" class="form-control mr-sm-2" type="search" placeholder="검색" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+<div class="container">
+    <table class="table">
+        <thead class="thead-light">
+        <tr class="text-center">
+            <th scope="col">#</th>
+            <th scope="col">제목</th>
+            <th scope="col">작가</th>
+            <th scope="col">카테고리</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-center" th:each="post : ${bookList}">
+            <th scope="row">
+                <span th:text="${post.id}"></span>
+            </th>
+            <td>
+                <a th:href="@{'/user/book/' + ${post.title}}">
+                    <span th:text="${post.title}"></span>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{'/user/myPage/' + ${post.writer}}">
+                    <span th:text="${post.writer}"></span>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{'/user/book/category/' + ${post.category}}">
+                    <span th:text="${post.category}"></span>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="row" sec:authorize="hasRole('ROLE_WRITER')">
+        <div class="col-auto mr-auto"></div>
+        <div class="col-auto">
+            <a class="btn btn-primary" th:href="@{/user/book/post}" role="button">작품 등록</a>
+        </div>
+        <div class="col-auto">
+            <a class="btn btn-secondary" th:href="@{/}" role="button">홈으로</a>
+        </div>
+    </div>
+    <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+        <a th:if="${page != nowPage}" th:href="@{/user/book(page = ${page - 1})}" th:text="${page}"></a>
+        <strong th:if="${page == nowPage}" th:text="${page}" style="color : red"></strong>
+    </th:block>
+</div>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../css/bootstrap.min.css"></script>
+</body>
+</html>

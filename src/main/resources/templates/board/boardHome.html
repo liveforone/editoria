@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>게시글</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand" th:href="@{/user/book}">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <h3><span th:text="${book.title}" class="badge badge-secondary"></span></h3>
+        </ul>
+        <ul class="navbar-nav mr-auto">
+            <h3><span th:text="|작가 : ${book.writer}|" class="badge badge-secondary"></span></h3>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <table class="table">
+        <thead class="thead-light">
+        <tr class="text-center">
+            <th scope="col">제목</th>
+            <th scope="col">게시일</th>
+            <th scope="col">좋아요</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-center" th:each="post : ${boardList}">
+            <td scope="row">
+                <a th:href="@{'/user/board/' + ${post.id}}">
+                    <span th:text="${post.title}"></span>
+                </a>
+            </td>
+            <td>
+                <span th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+            </td>
+            <td>
+                <span th:text="${post.good}"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+        <a th:if="${page != nowPage}" th:href="@{'/user/book/' + ${title}(page = ${page - 1})}" th:text="${page}"></a>
+        <strong th:if="${page == nowPage}" th:text="${page}" style="color : red"></strong>
+    </th:block>
+    <div class="col-auto">
+        <a class="btn btn-secondary" th:href="@{/user/book}" role="button">뒤로가기</a>
+    </div>
+    <div class="row" th:if="${book.writer == member}">
+        <div class="col-auto mr-auto"></div>
+        <div class="col-auto">
+            <a class="btn btn-primary" th:href="@{'/user/board/post/' + ${book.title}}" role="button">글쓰기</a>
+        </div>
+        <div class="col-auto">
+            <a class="btn btn-secondary" th:href="@{'/user/book/edit/' + ${book.title}}" role="button">작품 수정</a>
+        </div>
+    </div>
+</div>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../css/bootstrap.min.css"></script>
+</body>
+</html>

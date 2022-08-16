@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>수정</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<header th:insert="common/header.html"></header>
+<div class="container">
+    <form th:action="@{'/user/board/edit/' + ${post.id}}" method="post" enctype="multipart/form-data">
+        <div class="form-group row">
+            <label for="inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
+            <div class="col-sm-10">
+                <input
+                        type="text"
+                        name="title"
+                        class="form-control"
+                        id="inputTitle"
+                        th:value="${post.title}"
+                />
+            </div>
+        </div>
+        <div style="display:none" class="form-group row">
+            <label for="inputAuthor" class="col-sm-2 col-form-label"><strong>작성자</strong></label>
+            <div class="col-sm-10">
+                <input
+                        type="text"
+                        name="author"
+                        class="form-control"
+                        id="inputAuthor"
+                        th:value="${post.author}"
+                />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputContent" class="col-sm-2 col-form-label"><strong>내용</strong></label>
+            <div class="col-sm-10">
+            <textarea
+                    type="text"
+                    name="content"
+                    class="form-control"
+                    id="inputContent"
+                    th:text="${post.content}"
+            ></textarea>
+            </div>
+        </div>
+        <div style="display:none" class="form-group row">
+            <label for="inputGood" class="col-sm-2 col-form-label"><strong>좋아요</strong></label>
+            <div class="col-sm-10">
+                <input
+                        type="number"
+                        name="good"
+                        class="form-control"
+                        id="inputGood"
+                        th:value="${post.good}"
+                />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputFile" class="col-sm-2 col-form-label"><strong>사진 선택</strong></label>
+            <div class="col-sm-10">
+                <input class="form-control" type="file" name="uploadFile" multiple="multiple" id="inputFile">
+            </div>
+        </div>
+        <div class="form-group row" style="display:none">
+            <label for="inputSaveFileName" class="col-sm-2 col-form-label"><strong>saveFileName</strong></label>
+            <input id="inputSaveFileName" type="text" name="saveFileName" class="form-control" th:value="${post.saveFileName}">
+        </div>
+        <div class="form-group row" style="display:none">
+            <label for="inputBook" class="col-sm-2 col-form-label"><strong>book</strong></label>
+            <input id="inputBook" type="text" name="book" class="form-control" th:value="${post.book}">
+        </div>
+        <div class="row">
+            <div class="col-auto mr-auto"></div>
+            <div class="col-auto">
+                <a class="btn btn-secondary" th:href="@{/user/board}" role="button">나가기</a>
+            </div>
+            <div class="col-auto">
+                <input class="btn btn-primary" type="submit" role="button" value="수정" />
+            </div>
+        </div>
+    </form>
+</div>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../css/bootstrap.min.css"></script>
+</body>
+</html>

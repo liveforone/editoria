@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>마이 페이지</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand" th:href="@{/user/book}">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <h3><span th:text="|${author}님의 페이지|" class="badge badge-secondary"></span></h3>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <button type="button" class="btn btn-success">
+                팔로잉수 <span class="badge badge-light" th:text="${followingSize}"></span>
+            </button>
+        </div>
+        <div class="col-sm">
+            <a class="btn btn-warning" th:href="@{'/user/following/' + ${author}}">팔로잉 리스트</a>
+        </div>
+        <div class="col-sm">
+            <button type="button" class="btn btn-success">
+                팔로워수 <span class="badge badge-light" th:text="${followerSize}"></span>
+            </button>
+        </div>
+        <div class="col-sm">
+            <a class="btn btn-warning" th:href="@{'/user/follower/' + ${author}}">팔로워 리스트</a>
+        </div>
+        <div class="col-sm">
+            <form th:action="@{'/user/myPage/following/' + ${author}}" method="post">
+                <button type="submit" class="btn btn-info">팔로잉하기</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <table class="table">
+        <thead class="thead-light">
+        <tr class="text-center">
+            <th scope="col">#</th>
+            <th scope="col">제목</th>
+            <th scope="col">작가</th>
+            <th scope="col">카테고리</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-center" th:each="post : ${myPage}">
+            <th scope="row">
+                <span th:text="${post.id}"></span>
+            </th>
+            <td>
+                <a th:href="@{'/user/book/' + ${post.title}}">
+                    <span th:text="${post.title}"></span>
+                </a>
+            </td>
+            <td>
+                <span th:text="${post.writer}"></span>
+            </td>
+            <td>
+                <a th:href="@{'/user/book/category/' + ${post.category}}">
+                    <span th:text="${post.category}"></span>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="col-auto">
+        <a class="btn btn-secondary" th:href="@{/user/book}" role="button">나가기</a>
+    </div>
+    <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+        <a th:if="${page != nowPage}" th:href="@{'/user/myPage/' + ${author}(page = ${page - 1})}" th:text="${page}"></a>
+        <strong th:if="${page == nowPage}" th:text="${page}" style="color : red"></strong>
+    </th:block>
+</div>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../css/bootstrap.min.css"></script>
+</body>
+</html>

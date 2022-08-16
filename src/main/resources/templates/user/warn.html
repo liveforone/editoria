@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>이용수칙</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<header th:insert="common/header.html"></header>
+<h1 style="text-align: center;">이용수칙 안내</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-auto mr-auto"></div>
+        <div class="col-auto align-items-center">
+            <p>
+                1. 사진 주의 사항 : 게시글에 사진은 1장만 등록 가능합니다.
+            </p>
+            <p>
+                2. 게시글 주의 사항 : 이곳은 혐오, 욕설 저장소가 아닙니다. 소중한 여러분의 일상을 기록하세요!
+            </p>
+            <p>
+                3. 작품 주의사항 : 작품 삭제는 불가능합니다.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="container row" style="float: none; margin:100 auto;">
+    <div class="col-md-3" style="float: none; margin:0 auto;">
+        <a class="btn btn-secondary" th:href="@{/}" role="button">홈으로</a>
+    </div>
+</div>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../css/bootstrap.min.css"></script>
+</body>
+</html>
